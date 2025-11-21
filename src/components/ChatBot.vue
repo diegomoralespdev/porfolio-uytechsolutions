@@ -208,6 +208,14 @@ const quickSuggestions = [
   '🚀 Proyectos'
 ]
 
+// Get webhook URL based on environment
+const getWebhookUrl = (): string => {
+  const isDev = import.meta.env.VITE_APP_ENV === 'development'
+  return isDev
+    ? import.meta.env.VITE_CHATBOT_WEBHOOK_URL_DEV || 'https://n8n.uytechsolutions.com/webhook-test/chatbot'
+    : import.meta.env.VITE_CHATBOT_WEBHOOK_URL_PROD || 'https://n8n.uytechsolutions.com/webhook/chatbot'
+}
+
 // Generate stable sessionId
 const generateSessionId = async (data: string): Promise<string> => {
   const encoder = new TextEncoder()
@@ -342,13 +350,16 @@ const sendMessage = async () => {
         ip: null, // Will be detected by server
         userAgent,
         referer: document.referrer || null,
-        executionMode: 'production',
-        webhookUrl: 'https://n8n.uytechsolutions.com/webhook/chatbot',
-        clientVersion: '1.0.0'
+        executionMode: import.meta.env.VITE_APP_ENV || 'development',
+        webhookUrl: getWebhookUrl(),
+        clientVersion: import.meta.env.VITE_APP_VERSION || '1.0.0'
       }
     }
 
-    const response = await fetch('https://n8n.uytechsolutions.com/webhook/chatbot', {
+    const webhookUrl = getWebhookUrl()
+    console.log('Using webhook URL:', webhookUrl) // For debugging
+
+    const response = await fetch(webhookUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -391,27 +402,40 @@ const sendMessage = async () => {
 }
 
 .chatbot-window {
-  width: 400px;
-  height: 600px;
+  width: 420px;
+  height: 650px;
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(79, 70, 229, 0.2);
-  backdrop-filter: blur(20px);
-  background: rgba(26, 35, 50, 0.95);
-  border-radius: 1rem;
+  border: 1px solid rgba(79, 70, 229, 0.3);
+  backdrop-filter: blur(25px);
+  background: rgba(26, 35, 50, 0.98);
+  border-radius: 1.25rem;
   overflow: hidden;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3),
-              0 0 40px rgba(79, 70, 229, 0.1);
+  box-shadow:
+    0 32px 64px rgba(0, 0, 0, 0.4),
+    0 0 50px rgba(79, 70, 229, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .chatbot-header {
-  background: linear-gradient(135deg, rgba(26, 35, 50, 0.9) 0%, rgba(42, 52, 65, 0.9) 100%);
-  backdrop-filter: blur(10px);
-  padding: 1.25rem;
-  border-bottom: 1px solid rgba(79, 70, 229, 0.2);
+  background: linear-gradient(135deg, rgba(26, 35, 50, 0.95) 0%, rgba(42, 52, 65, 0.95) 100%);
+  backdrop-filter: blur(15px);
+  padding: 1.5rem 1.75rem;
+  border-bottom: 1px solid rgba(79, 70, 229, 0.3);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+}
+
+.chatbot-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(79, 70, 229, 0.5) 50%, transparent 100%);
 }
 
 .chatbot-control-btn {
@@ -431,12 +455,13 @@ const sendMessage = async () => {
 
 .chatbot-messages {
   flex: 1;
-  padding: 1.5rem;
+  padding: 2rem 1.75rem;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
   scroll-behavior: smooth;
+  min-height: 0;
 }
 
 .chatbot-messages::-webkit-scrollbar {
@@ -456,11 +481,15 @@ const sendMessage = async () => {
 .chatbot-message-user {
   background: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%);
   color: white;
-  padding: 0.75rem 1rem;
-  border-radius: 1rem 1rem 0.25rem 1rem;
-  max-width: 280px;
+  padding: 0.875rem 1.125rem;
+  border-radius: 1.125rem 1.125rem 0.375rem 1.125rem;
+  max-width: 300px;
   word-wrap: break-word;
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+  line-height: 1.5;
+  font-size: 0.9rem;
+  box-shadow:
+    0 6px 20px rgba(79, 70, 229, 0.25),
+    0 2px 8px rgba(79, 70, 229, 0.15);
   position: relative;
 }
 
@@ -477,14 +506,19 @@ const sendMessage = async () => {
 }
 
 .chatbot-message-bot {
-  background: rgba(42, 52, 65, 0.8);
-  backdrop-filter: blur(10px);
+  background: rgba(42, 52, 65, 0.9);
+  backdrop-filter: blur(12px);
   color: #F1F5F9;
-  padding: 0.75rem 1rem;
-  border-radius: 1rem 1rem 1rem 0.25rem;
-  max-width: 280px;
+  padding: 0.875rem 1.125rem;
+  border-radius: 1.125rem 1.125rem 1.125rem 0.375rem;
+  max-width: 300px;
   word-wrap: break-word;
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  line-height: 1.5;
+  font-size: 0.9rem;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow:
+    0 4px 15px rgba(16, 185, 129, 0.1),
+    0 1px 6px rgba(0, 0, 0, 0.1);
   position: relative;
 }
 
@@ -530,22 +564,34 @@ const sendMessage = async () => {
 }
 
 .chatbot-input-area {
-  padding: 1.25rem;
-  border-top: 1px solid rgba(79, 70, 229, 0.2);
-  background: linear-gradient(135deg, rgba(26, 35, 50, 0.9) 0%, rgba(42, 52, 65, 0.9) 100%);
-  backdrop-filter: blur(10px);
+  padding: 1.5rem 1.75rem;
+  border-top: 1px solid rgba(79, 70, 229, 0.3);
+  background: linear-gradient(135deg, rgba(26, 35, 50, 0.95) 0%, rgba(42, 52, 65, 0.95) 100%);
+  backdrop-filter: blur(15px);
+  position: relative;
+}
+
+.chatbot-input-area::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(79, 70, 229, 0.4) 50%, transparent 100%);
 }
 
 .chatbot-input {
   width: 100%;
-  background: rgba(42, 52, 65, 0.8);
-  backdrop-filter: blur(10px);
+  background: rgba(42, 52, 65, 0.9);
+  backdrop-filter: blur(12px);
   color: #F1F5F9;
-  padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
-  border: 1px solid rgba(79, 70, 229, 0.3);
-  transition: all 0.3s ease;
+  padding: 0.875rem 1.125rem;
+  border-radius: 0.875rem;
+  border: 1.5px solid rgba(79, 70, 229, 0.25);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 .chatbot-input:focus {
@@ -563,16 +609,19 @@ const sendMessage = async () => {
 .chatbot-send-btn {
   background: linear-gradient(135deg, #4F46E5 0%, #10B981 100%);
   color: white;
-  padding: 0.75rem;
-  border-radius: 0.75rem;
-  transition: all 0.3s ease;
+  padding: 0.875rem;
+  border-radius: 0.875rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 48px;
-  height: 48px;
+  min-width: 52px;
+  height: 52px;
+  box-shadow:
+    0 4px 15px rgba(79, 70, 229, 0.2),
+    0 2px 8px rgba(16, 185, 129, 0.1);
 }
 
 .chatbot-send-btn:hover:not(:disabled) {
@@ -605,24 +654,88 @@ const sendMessage = async () => {
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .chatbot-window {
-    width: 360px;
-    height: 500px;
+    width: 380px;
+    height: 580px;
+  }
+
+  .chatbot-header {
+    padding: 1.25rem 1.5rem;
   }
 
   .chatbot-messages {
-    padding: 1rem;
+    padding: 1.5rem 1.25rem;
+    gap: 1rem;
   }
 
   .chatbot-input-area {
-    padding: 1rem;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .chatbot-message-user,
+  .chatbot-message-bot {
+    max-width: 260px;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
   }
 }
 
 @media (max-width: 480px) {
+  .fixed.bottom-6.right-6 {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
   .chatbot-window {
     width: calc(100vw - 2rem);
     height: calc(100vh - 8rem);
     max-width: 360px;
+    max-height: 600px;
+  }
+
+  .chatbot-header {
+    padding: 1rem 1.25rem;
+  }
+
+  .chatbot-header h3 {
+    font-size: 1rem;
+  }
+
+  .chatbot-messages {
+    padding: 1.25rem 1rem;
+  }
+
+  .chatbot-input-area {
+    padding: 1rem 1.25rem;
+  }
+
+  .chatbot-message-user,
+  .chatbot-message-bot {
+    max-width: 240px;
+    padding: 0.675rem 0.875rem;
+    font-size: 0.8rem;
+  }
+
+  .chatbot-send-btn {
+    min-width: 48px;
+    height: 48px;
+    padding: 0.75rem;
+  }
+
+  .chatbot-input {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .chatbot-window {
+    width: calc(100vw - 1rem);
+    height: calc(100vh - 6rem);
+  }
+
+  .chatbot-message-user,
+  .chatbot-message-bot {
+    max-width: 200px;
   }
 }
 </style>
