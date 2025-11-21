@@ -24,9 +24,10 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # Copy built app from build stage
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Create non-root user for security
-RUN addgroup -g 1001 -S nginx && \
-    adduser -S nginx -u 1001
+# Install curl for health checks
+RUN apk add --no-cache curl
+
+# Nginx user already exists in base image
 
 # Expose port
 EXPOSE 80
