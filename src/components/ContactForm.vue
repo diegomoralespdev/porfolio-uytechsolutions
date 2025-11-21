@@ -92,7 +92,7 @@
       <button
         type="submit"
         :disabled="isSubmitting"
-        class="w-full bg-primary-500 hover:bg-primary-600 disabled:bg-primary-500/50 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 disabled:transform-none disabled:cursor-not-allowed shadow-lg hover:shadow-primary-500/25"
+        class="w-full bg-[#4F46E5] hover:bg-[#4F46E5] disabled:bg-[#4F46E5]/50 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 disabled:transform-none disabled:cursor-not-allowed shadow-lg hover:shadow-primary-500/25"
       >
         <span v-if="!isSubmitting" class="flex items-center justify-center space-x-2">
           <span>Enviar Mensaje</span>
@@ -216,7 +216,8 @@ const handleSubmit = async () => {
     }, 5000)
     
   } catch (error) {
-    submitError.value = 'Hubo un error al enviar el mensaje. Por favor, intenta nuevamente.'
+    console.error('Contact form submission error:', error)
+    submitError.value = 'There was an error sending the message. Please try again.'
   } finally {
     isSubmitting.value = false
   }

@@ -6,41 +6,83 @@
     </div>
 
     <!-- Gradient Overlay -->
-    <div class="absolute inset-0 bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A]"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-[#0B1426] via-[#1A2332] to-[#0B1426]"></div>
 
-    <!-- Tech Lines -->
+    <!-- Enhanced Tech Elements -->
     <div class="absolute inset-0 overflow-hidden">
-      <div class="absolute top-20 left-10 w-32 h-px bg-gradient-to-r from-transparent via-[#38BDF8] to-transparent opacity-30"></div>
-      <div class="absolute top-40 right-20 w-24 h-px bg-gradient-to-r from-transparent via-[#06B6D4] to-transparent opacity-30"></div>
-      <div class="absolute bottom-40 left-1/4 w-20 h-px bg-gradient-to-r from-transparent via-[#38BDF8] to-transparent opacity-20"></div>
-      <div class="absolute bottom-20 right-1/3 w-16 h-px bg-gradient-to-r from-transparent via-[#06B6D4] to-transparent opacity-20"></div>
+      <!-- Animated Tech Lines -->
+      <div class="absolute top-20 left-10 w-32 h-px bg-gradient-to-r from-transparent via-[#4F46E5] to-transparent opacity-35 animate-pulse"></div>
+      <div class="absolute top-40 right-20 w-24 h-px bg-gradient-to-r from-transparent via-[#10B981] to-transparent opacity-30 animate-pulse" style="animation-delay: 1s"></div>
+      <div class="absolute bottom-40 left-1/4 w-20 h-px bg-gradient-to-r from-transparent via-[#4F46E5] to-transparent opacity-25 animate-pulse" style="animation-delay: 2s"></div>
+      <div class="absolute bottom-20 right-1/3 w-16 h-px bg-gradient-to-r from-transparent via-[#06B6D4] to-transparent opacity-25 animate-pulse" style="animation-delay: 3s"></div>
+      
+      <!-- Floating Tech Particles -->
+      <div class="absolute top-1/4 left-1/4 w-2 h-2 bg-[#4F46E5] rounded-full opacity-45 animate-float" style="animation-delay: 0.5s"></div>
+      <div class="absolute top-1/3 right-1/4 w-1 h-1 bg-[#10B981] rounded-full opacity-35 animate-float" style="animation-delay: 1.5s"></div>
+      <div class="absolute bottom-1/3 left-1/3 w-1.5 h-1.5 bg-[#06B6D4] rounded-full opacity-40 animate-float" style="animation-delay: 2.5s"></div>
+      
+      <!-- Grid Pattern -->
+      <div class="absolute inset-0 opacity-5">
+        <div class="grid grid-cols-12 h-full">
+          <div class="border-r border-[#4F46E5]"></div>
+          <div class="border-r border-[#4F46E5]"></div>
+          <div class="border-r border-[#4F46E5]"></div>
+          <div class="border-r border-[#4F46E5]"></div>
+          <div class="border-r border-[#4F46E5]"></div>
+          <div class="border-r border-[#4F46E5]"></div>
+          <div class="border-r border-[#4F46E5]"></div>
+          <div class="border-r border-[#4F46E5]"></div>
+          <div class="border-r border-[#4F46E5]"></div>
+          <div class="border-r border-[#4F46E5]"></div>
+          <div class="border-r border-[#4F46E5]"></div>
+          <div></div>
+        </div>
+      </div>
+
+      <!-- Subtle Circuit Patterns -->
+      <div class="absolute top-10 right-10 opacity-20">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <path d="M10 30h10v10h10v-10h20" stroke="#4F46E5" strokeWidth="1" opacity="0.5"/>
+          <path d="M30 10v10h10v10h-10v20" stroke="#10B981" strokeWidth="1" opacity="0.5"/>
+          <circle cx="20" cy="30" r="2" fill="#4F46E5" opacity="0.7"/>
+          <circle cx="40" cy="20" r="2" fill="#10B981" opacity="0.7"/>
+        </svg>
+      </div>
+      
+      <div class="absolute bottom-10 left-10 opacity-20">
+        <svg width="80" height="60" viewBox="0 0 80 60" fill="none">
+          <path d="M10 20h20v10h20v10h20" stroke="#06B6D4" strokeWidth="1" opacity="0.5"/>
+          <path d="M20 10v20h10v20" stroke="#4F46E5" strokeWidth="1" opacity="0.5"/>
+          <rect x="18" y="18" width="4" height="4" fill="#06B6D4" opacity="0.7"/>
+          <rect x="48" y="28" width="4" height="4" fill="#4F46E5" opacity="0.7"/>
+        </svg>
+      </div>
     </div>
 
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <!-- Main Content -->
       <div class="animate-fade-in-up" style="animation-delay: 0.2s">
-        <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-[#E2E8F0] mb-6 leading-tight">
-          Soluciones
-          <span class="gradient-text hover-glow block">Tecnológicas</span>
-          <span class="text-[#94A3B8] text-4xl md:text-5xl lg:text-6xl font-medium">a Medida</span>
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-[#F1F5F9] mb-6 leading-tight">
+          {{ text.hero.title }}
+          <span class="gradient-text hover-glow block">{{ text.hero.titleHighlight }}</span>
+          <span class="text-[#94A3B8] text-4xl md:text-5xl lg:text-6xl font-medium">{{ text.hero.subtitle }}</span>
         </h1>
         
         <p class="text-xl md:text-2xl text-[#94A3B8] mb-12 max-w-4xl mx-auto leading-relaxed">
-          Transformamos ideas en realidades digitales con tecnología de vanguardia, 
-          arquitecturas escalables y soluciones innovadoras que impulsan el futuro de tu negocio
+          {{ text.hero.description }}
         </p>
 
         <!-- CTA Buttons -->
         <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16 animate-fade-in-up" style="animation-delay: 0.4s">
           <a href="#projects" class="btn-primary group">
-            Ver Proyectos
+            {{ text.hero.cta1 }}
             <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </a>
           
           <a href="#contact" class="btn-secondary group">
-            Iniciar Proyecto
+            {{ text.hero.cta2 }}
             <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
@@ -56,7 +98,7 @@
               </svg>
             </div>
             <div class="stats-number group-hover:animate-glow">50+</div>
-            <div class="stats-label">Proyectos Exitosos</div>
+            <div class="stats-label">{{ text.hero.stats.projects }}</div>
           </div>
           
           <div class="stats-card hover-lift group">
@@ -66,7 +108,7 @@
               </svg>
             </div>
             <div class="stats-number group-hover:animate-glow">5+</div>
-            <div class="stats-label">Años de Experiencia</div>
+            <div class="stats-label">{{ text.hero.stats.experience }}</div>
           </div>
           
           <div class="stats-card hover-lift group">
@@ -76,23 +118,19 @@
               </svg>
             </div>
             <div class="stats-number group-hover:animate-glow">100%</div>
-            <div class="stats-label">Clientes Satisfechos</div>
+            <div class="stats-label">{{ text.hero.stats.satisfaction }}</div>
           </div>
         </div>
       </div>
 
-      <!-- Scroll Indicator -->
-      <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
-        <div class="w-6 h-10 border-2 border-[#38BDF8] rounded-full flex justify-center">
-          <div class="w-1 h-3 bg-[#38BDF8] rounded-full mt-2 animate-pulse"></div>
-        </div>
-      </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-// Component logic here
+import { useI18n } from '@/composables/useI18n'
+
+const { text } = useI18n()
 </script>
 
 <style scoped>

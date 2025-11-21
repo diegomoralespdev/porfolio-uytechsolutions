@@ -9,7 +9,7 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
       meta: {
-        title: 'UY Tech Solutions - Innovación y Soluciones de Software a Medida'
+        title: 'UY Tech Solutions'
       }
     },
     {
@@ -45,21 +45,8 @@ const router = createRouter({
       }
     }
   ],
-  scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { top: 0 }
-    }
-  }
-})
 
-// Update page title on route change
-router.beforeEach((to, from, next) => {
-  if (to.meta.title) {
-    document.title = to.meta.title as string
-  }
-  next()
+
 })
 
 export default router

@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  portfolio:
+    image: ghcr.io/diegomoralespdev/porfolio:latest
+    container_name: uytech-portfolio
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"  # If you plan to use SSL later
+    networks:
+      - portfolio-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    environment:
+      - TZ=America/Montevideo
+
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ~/.docker/config.json:/config.json:ro
+    environment:
+      - TZ=America/Montevideo
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=300  # Check every 5 minutes
+      - WATCHTOWER_ROLLING_RESTART=true
+      - WATCHTOWER_INCLUDE_RESTARTING=true
+      - WATCHTOWER_LABEL_ENABLE=true
+      - WATCHTOWER_DEBUG=false
+    networks:
+      - portfolio-network
+    command: --interval 300 --cleanup
+
+networks:
+  portfolio-network:
+    driver: bridge
