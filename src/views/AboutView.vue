@@ -5,10 +5,10 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
           <h1 class="section-title">
-            {{ t('aboutPage.title') }} <span class="gradient-text">{{ t('aboutPage.titleHighlight') }}</span>
+            {{ text.aboutPage.title }} <span class="gradient-text">{{ text.aboutPage.titleHighlight }}</span>
           </h1>
           <p class="section-subtitle">
-            {{ t('aboutPage.subtitle') }}
+            {{ text.aboutPage.subtitle }}
           </p>
         </div>
       </div>
@@ -20,10 +20,10 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 class="text-3xl md:text-4xl font-bold text-[#F1F5F9] mb-6">
-              {{ t('aboutPage.story.title') }}
+              {{ text.aboutPage.story.title }}
             </h2>
             <p class="text-gray-300 mb-6 leading-relaxed">
-              {{ t('aboutPage.story.description') }}
+              {{ text.aboutPage.story.description }}
             </p>
             <div class="flex items-center space-x-4">
               <div class="w-12 h-12 bg-[#4F46E5] rounded-xl flex items-center justify-center">
@@ -33,7 +33,7 @@
               </div>
               <div>
                 <div class="text-2xl font-bold text-[#F1F5F9]">50+</div>
-                <div class="text-gray-400">{{ locale === 'es' ? 'Proyectos Completados' : 'Completed Projects' }}</div>
+                <div class="text-gray-400">Completed Projects</div>
               </div>
             </div>
           </div>
@@ -46,7 +46,7 @@
                   </svg>
                 </div>
                 <h3 class="text-xl font-semibold text-[#F1F5F9] mb-2">UY Tech Solutions</h3>
-                <p class="text-gray-300">{{ locale === 'es' ? 'Innovación y Excelencia' : 'Innovation and Excellence' }}</p>
+                <p class="text-gray-300">Innovation and Excellence</p>
               </div>
             </div>
           </div>
@@ -64,9 +64,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
               </svg>
             </div>
-            <h3 class="text-2xl font-bold text-[#F1F5F9] mb-4">{{ t('aboutPage.mission.title') }}</h3>
+            <h3 class="text-2xl font-bold text-[#F1F5F9] mb-4">{{ text.aboutPage.mission.title }}</h3>
             <p class="text-gray-300 leading-relaxed">
-              {{ t('aboutPage.mission.description') }}
+              {{ text.aboutPage.mission.description }}
             </p>
           </div>
 
@@ -77,9 +77,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
               </svg>
             </div>
-            <h3 class="text-2xl font-bold text-[#F1F5F9] mb-4">{{ t('aboutPage.vision.title') }}</h3>
+            <h3 class="text-2xl font-bold text-[#F1F5F9] mb-4">{{ text.aboutPage.vision.title }}</h3>
             <p class="text-gray-300 leading-relaxed">
-              {{ t('aboutPage.vision.description') }}
+              {{ text.aboutPage.vision.description }}
             </p>
           </div>
         </div>
@@ -91,10 +91,10 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
           <h2 class="section-title">
-            {{ locale === 'es' ? 'Nuestros' : 'Our' }} <span class="gradient-text">{{ locale === 'es' ? 'Valores' : 'Values' }}</span>
+            Our <span class="gradient-text">Values</span>
           </h2>
           <p class="section-subtitle">
-            {{ locale === 'es' ? 'Los principios que guían nuestro trabajo y relación con los clientes' : 'The principles that guide our work and relationship with clients' }}
+            The principles that guide our work and relationship with clients
           </p>
         </div>
 
@@ -105,9 +105,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold text-[#F1F5F9] mb-4">{{ t('aboutPage.values.excellence.title') }}</h3>
+            <h3 class="text-xl font-bold text-[#F1F5F9] mb-4">{{ text.aboutPage.values.excellence.title }}</h3>
             <p class="text-gray-400">
-              {{ t('aboutPage.values.excellence.description') }}
+              {{ text.aboutPage.values.excellence.description }}
             </p>
           </div>
 
@@ -117,9 +117,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold text-[#F1F5F9] mb-4">{{ t('aboutPage.values.innovation.title') }}</h3>
+            <h3 class="text-xl font-bold text-[#F1F5F9] mb-4">{{ text.aboutPage.values.innovation.title }}</h3>
             <p class="text-gray-400">
-              {{ t('aboutPage.values.innovation.description') }}
+              {{ text.aboutPage.values.innovation.description }}
             </p>
           </div>
 
@@ -129,9 +129,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold text-[#F1F5F9] mb-4">{{ t('aboutPage.values.collaboration.title') }}</h3>
+            <h3 class="text-xl font-bold text-[#F1F5F9] mb-4">{{ text.aboutPage.values.collaboration.title }}</h3>
             <p class="text-gray-400">
-              {{ t('aboutPage.values.collaboration.description') }}
+              {{ text.aboutPage.values.collaboration.description }}
             </p>
           </div>
         </div>
@@ -143,26 +143,26 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
           <h2 class="section-title">
-            {{ t('aboutPage.team.title') }}
+            {{ text.aboutPage.team.title }}
           </h2>
           <p class="section-subtitle">
-            {{ t('aboutPage.team.subtitle') }}
+            {{ text.aboutPage.team.subtitle }}
           </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div class="card text-center hover-lift group">
             <div class="w-32 h-32 bg-gradient-to-br from-[#4F46E5] to-[#3730A3] rounded-full flex items-center justify-center mx-auto mb-6 overflow-hidden">
-              <img 
-                src="/images/diego-elevator-selfie.jpg" 
+              <img
+                src="/images/diego-elevator-selfie.jpg"
                 alt="Diego Morales Perez - Fundador UY Tech Solutions"
                 class="w-full h-full object-cover"
               />
             </div>
-            <h3 class="text-xl font-bold text-[#F1F5F9] mb-2">{{ t('founder.name') }}</h3>
-            <p class="text-[#4F46E5] mb-4">{{ t('founder.role') }}</p>
+            <h3 class="text-xl font-bold text-[#F1F5F9] mb-2">{{ text.founder.name }}</h3>
+            <p class="text-[#4F46E5] mb-4">{{ text.founder.role }}</p>
             <p class="text-gray-400 mb-6">
-              {{ locale === 'es' ? 'Desarrollador full-stack con más de 5 años de experiencia en tecnologías modernas. Apasionado por la innovación y el crecimiento del ecosistema tecnológico uruguayo.' : 'Full-stack developer with over 5 years of experience in modern technologies. Passionate about innovation and the growth of the Uruguayan technological ecosystem.' }}
+              Full-stack developer with over 5 years of experience in modern technologies. Passionate about innovation and the growth of the Uruguayan technological ecosystem.
             </p>
             <div class="flex justify-center space-x-4">
              <a href="https://www.linkedin.com/in/diegomoralesdev" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-[#4F46E5] transition-colors">
@@ -186,5 +186,5 @@
 <script setup lang="ts">
 import { useI18n } from '@/composables/useI18n'
 
-const { t, locale } = useI18n()
+const { text } = useI18n()
 </script>

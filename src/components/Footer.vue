@@ -13,9 +13,9 @@
             <span class="text-xl font-bold text-white">UY Tech Solutions</span>
           </div>
           <p class="text-gray-400 mb-6 max-w-md leading-relaxed">
-            {{ t('footer.description') }}
+            {{ text.footer.description }}
           </p>
-          
+
           <!-- Social Links -->
           <div class="flex space-x-4">
             <a
@@ -29,7 +29,7 @@
               </svg>
             </a>
             <a
-                              href="https://github.com/diegomoralespdev"
+              href="https://github.com/diegomoralespdev"
               target="_blank"
               rel="noopener noreferrer"
               class="w-10 h-10 bg-dark-800 hover:bg-[#4F46E5] text-gray-400 hover:text-white rounded-lg flex items-center justify-center transition-all duration-300 transform hover:scale-110"
@@ -49,7 +49,7 @@
               </svg>
             </a>
             <a
-                              href="mailto:contact@uytechsolutions.com"
+              href="mailto:contact@uytechsolutions.com"
               class="w-10 h-10 bg-dark-800 hover:bg-[#4F46E5] text-gray-400 hover:text-white rounded-lg flex items-center justify-center transition-all duration-300 transform hover:scale-110"
             >
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,31 +61,31 @@
 
         <!-- Quick Links -->
         <div>
-          <h3 class="text-lg font-semibold text-white mb-4">{{ t('footer.quickLinks') }}</h3>
+          <h3 class="text-lg font-semibold text-white mb-4">{{ text.footer.quickLinks }}</h3>
           <ul class="space-y-3">
             <li>
               <router-link to="/" class="text-gray-400 hover:text-[#4F46E5] transition-colors duration-200">
-                Inicio
+                {{ text.nav.home }}
               </router-link>
             </li>
             <li>
               <router-link to="/about" class="text-gray-400 hover:text-[#4F46E5] transition-colors duration-200">
-                Sobre Nosotros
+                {{ text.nav.about }}
               </router-link>
             </li>
             <li>
               <router-link to="/services" class="text-gray-400 hover:text-[#4F46E5] transition-colors duration-200">
-                Servicios
+                {{ text.nav.services }}
               </router-link>
             </li>
             <li>
               <router-link to="/projects" class="text-gray-400 hover:text-[#4F46E5] transition-colors duration-200">
-                Proyectos
+                {{ text.nav.projects }}
               </router-link>
             </li>
             <li>
               <router-link to="/contact" class="text-gray-400 hover:text-[#4F46E5] transition-colors duration-200">
-                {{ t('nav.contact') }}
+                {{ text.nav.contact }}
               </router-link>
             </li>
           </ul>
@@ -93,7 +93,7 @@
 
         <!-- Contact Info -->
         <div>
-          <h3 class="text-lg font-semibold text-white mb-4">{{ t('footer.contact') }}</h3>
+          <h3 class="text-lg font-semibold text-white mb-4">{{ text.footer.contact }}</h3>
           <div class="space-y-3">
             <div class="flex items-center space-x-3">
               <div class="w-8 h-8 bg-[#4F46E5]/20 rounded-lg flex items-center justify-center">
@@ -101,7 +101,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-                              <span class="text-gray-400">contact@uytechsolutions.com</span>
+              <span class="text-gray-400">contact@uytechsolutions.com</span>
             </div>
             <div class="flex items-center space-x-3">
               <div class="w-8 h-8 bg-[#4F46E5]/20 rounded-lg flex items-center justify-center">
@@ -128,14 +128,14 @@
       <div class="border-t border-dark-700 mt-12 pt-8">
         <div class="flex flex-col md:flex-row justify-between items-center">
           <p class="text-gray-400 text-sm">
-            &copy; {{ new Date().getFullYear() }} UY Tech Solutions. {{ t('footer.rights') }}
+            &copy; {{ new Date().getFullYear() }} UY Tech Solutions. {{ text.footer.rights }}
           </p>
           <div class="flex space-x-6 mt-4 md:mt-0">
             <a href="#" class="text-gray-400 hover:text-[#4F46E5] text-sm transition-colors duration-200">
-              {{ locale === 'es' ? 'Política de Privacidad' : 'Privacy Policy' }}
+              Privacy Policy
             </a>
             <a href="#" class="text-gray-400 hover:text-[#4F46E5] text-sm transition-colors duration-200">
-              {{ locale === 'es' ? 'Términos de Servicio' : 'Terms of Service' }}
+              Terms of Service
             </a>
           </div>
         </div>
@@ -147,5 +147,5 @@
 <script setup lang="ts">
 import { useI18n } from '@/composables/useI18n'
 
-const { t, locale } = useI18n()
+const { text } = useI18n()
 </script>

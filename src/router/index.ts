@@ -9,7 +9,7 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
       meta: {
-        title: 'UY Tech Solutions - Innovación y Soluciones de Software a Medida'
+        title: 'UY Tech Solutions'
       }
     },
     {
@@ -46,7 +46,7 @@ const router = createRouter({
     }
   ],
 
-  
+
 })
 
 export default router

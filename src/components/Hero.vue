@@ -63,26 +63,26 @@
       <!-- Main Content -->
       <div class="animate-fade-in-up" style="animation-delay: 0.2s">
         <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-[#F1F5F9] mb-6 leading-tight">
-          {{ t('hero.title') }}
-          <span class="gradient-text hover-glow block">{{ t('hero.titleHighlight') }}</span>
-          <span class="text-[#94A3B8] text-4xl md:text-5xl lg:text-6xl font-medium">{{ t('hero.subtitle') }}</span>
+          {{ text.hero.title }}
+          <span class="gradient-text hover-glow block">{{ text.hero.titleHighlight }}</span>
+          <span class="text-[#94A3B8] text-4xl md:text-5xl lg:text-6xl font-medium">{{ text.hero.subtitle }}</span>
         </h1>
         
         <p class="text-xl md:text-2xl text-[#94A3B8] mb-12 max-w-4xl mx-auto leading-relaxed">
-          {{ t('hero.description') }}
+          {{ text.hero.description }}
         </p>
 
         <!-- CTA Buttons -->
         <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16 animate-fade-in-up" style="animation-delay: 0.4s">
           <a href="#projects" class="btn-primary group">
-            {{ t('hero.cta1') }}
+            {{ text.hero.cta1 }}
             <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </a>
           
           <a href="#contact" class="btn-secondary group">
-            {{ t('hero.cta2') }}
+            {{ text.hero.cta2 }}
             <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
@@ -98,7 +98,7 @@
               </svg>
             </div>
             <div class="stats-number group-hover:animate-glow">50+</div>
-            <div class="stats-label">{{ t('hero.stats.projects') }}</div>
+            <div class="stats-label">{{ text.hero.stats.projects }}</div>
           </div>
           
           <div class="stats-card hover-lift group">
@@ -108,7 +108,7 @@
               </svg>
             </div>
             <div class="stats-number group-hover:animate-glow">5+</div>
-            <div class="stats-label">{{ t('hero.stats.experience') }}</div>
+            <div class="stats-label">{{ text.hero.stats.experience }}</div>
           </div>
           
           <div class="stats-card hover-lift group">
@@ -118,7 +118,7 @@
               </svg>
             </div>
             <div class="stats-number group-hover:animate-glow">100%</div>
-            <div class="stats-label">{{ t('hero.stats.satisfaction') }}</div>
+            <div class="stats-label">{{ text.hero.stats.satisfaction }}</div>
           </div>
         </div>
       </div>
@@ -130,7 +130,7 @@
 <script setup lang="ts">
 import { useI18n } from '@/composables/useI18n'
 
-const { t } = useI18n()
+const { text } = useI18n()
 </script>
 
 <style scoped>

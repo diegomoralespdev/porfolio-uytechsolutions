@@ -23,37 +23,29 @@
                 <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-[#10B981] border-2 border-[#0B1426] rounded-full"></div>
               </div>
               <div>
-                <h3 class="text-[#F1F5F9] font-bold text-sm">{{ t('chatbot.title') }}</h3>
+                <h3 class="text-[#F1F5F9] font-bold text-sm">{{ text.chatbot.title }}</h3>
                 <div class="flex items-center space-x-1">
                   <div class="w-2 h-2 bg-[#10B981] rounded-full"></div>
-                  <p class="text-[#10B981] text-xs font-medium">{{ t('chatbot.status') }}</p>
+                  <p class="text-[#10B981] text-xs font-medium">{{ text.chatbot.status }}</p>
                 </div>
               </div>
             </div>
             <div class="flex items-center space-x-2">
-              <!-- Language toggle for chat -->
-              <button
-                @click="toggleChatLanguage"
-                class="text-[#94A3B8] hover:text-[#4F46E5] transition-all duration-300 transform hover:scale-110 p-1 rounded-lg"
-                :title="locale === 'es' ? 'Switch to English' : 'Cambiar a Español'"
-              >
-                <span class="text-xs font-bold">{{ locale.toUpperCase() }}</span>
-              </button>
               <!-- Minimize button -->
-              <button 
+              <button
                 @click="minimizeChat"
                 class="text-[#94A3B8] hover:text-[#4F46E5] transition-all duration-300 transform hover:scale-110 p-1 rounded-lg"
-                :title="locale === 'es' ? 'Minimizar' : 'Minimize'"
+                title="Minimize"
               >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
                 </svg>
               </button>
               <!-- Close button -->
-              <button 
+              <button
                 @click="closeChat"
                 class="text-[#94A3B8] hover:text-red-400 transition-all duration-300 transform hover:scale-110 p-1 rounded-lg"
-                :title="locale === 'es' ? 'Cerrar' : 'Close'"
+                title="Close"
               >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -65,14 +57,14 @@
 
         <!-- Chat Messages -->
         <div ref="messagesContainer" class="flex-1 p-4 space-y-4 overflow-y-auto max-h-80 scroll-smooth">
-          <div v-for="(message, index) in messages" :key="index" 
-               class="flex animate-fade-in-up" 
+          <div v-for="(message, index) in messages" :key="index"
+               class="flex animate-fade-in-up"
                :class="message.isUser ? 'justify-end' : 'justify-start'"
                :style="`animation-delay: ${index * 0.1}s`">
-            <div 
+            <div
               class="max-w-xs px-4 py-3 rounded-2xl transition-all duration-300 transform hover:scale-105 relative"
-              :class="message.isUser 
-                ? 'bg-gradient-tech text-white rounded-br-md shadow-lg' 
+              :class="message.isUser
+                ? 'bg-gradient-tech text-white rounded-br-md shadow-lg'
                 : 'bg-[#1A2332] text-[#F1F5F9] rounded-bl-md border border-[#4F46E5]/30'"
             >
               <p class="text-sm leading-relaxed">{{ message.text }}</p>
@@ -82,11 +74,11 @@
                   <div class="w-1 h-1 bg-[#10B981] rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
                   <div class="w-1 h-1 bg-[#06B6D4] rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
                 </div>
-                <span class="text-xs text-[#94A3B8] font-medium">{{ t('chatbot.botName') }}</span>
+                <span class="text-xs text-[#94A3B8] font-medium">{{ text.chatbot.botName }}</span>
               </div>
             </div>
           </div>
-          
+
           <!-- Typing indicator -->
           <div v-if="isTyping" class="flex justify-start animate-fade-in">
             <div class="bg-[#1A2332]/80 backdrop-blur-sm px-4 py-3 rounded-2xl rounded-bl-md border border-[#4F46E5]/20">
@@ -96,7 +88,7 @@
                   <div class="w-2 h-2 bg-[#10B981] rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
                   <div class="w-2 h-2 bg-[#06B6D4] rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
                 </div>
-                <span class="text-xs text-[#94A3B8]">{{ t('chatbot.typing') }}</span>
+                <span class="text-xs text-[#94A3B8]">{{ text.chatbot.typing }}</span>
               </div>
             </div>
           </div>
@@ -125,11 +117,11 @@
                 @keyup.enter="sendMessage"
                 @focus="showQuickActions = false"
                 type="text"
-                :placeholder="t('chatbot.placeholder')"
+                :placeholder="text.chatbot.placeholder"
                 class="w-full px-4 py-3 bg-[#1A2332]/50 border border-[#4F46E5]/20 rounded-2xl text-[#F1F5F9] text-sm focus:border-[#4F46E5]/50 focus:bg-[#1A2332]/80 transition-all duration-300 placeholder-[#94A3B8]"
               />
             </div>
-            <button 
+            <button
               @click="sendMessage"
               :disabled="!newMessage.trim() || isTyping"
               class="w-12 h-12 bg-gradient-tech text-white rounded-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:shadow-glow disabled:opacity-50 disabled:cursor-not-allowed"
@@ -163,19 +155,19 @@
         class="relative w-16 h-16 bg-gradient-tech text-white rounded-2xl shadow-2xl flex items-center justify-center transition-all duration-500 transform hover:scale-110 hover:shadow-glow group overflow-hidden animate-float"
       >
         <!-- Notification badge -->
-        <div v-if="hasUnreadMessages" 
+        <div v-if="hasUnreadMessages"
              class="absolute -top-2 -right-2 w-6 h-6 bg-[#10B981] border-2 border-white rounded-full flex items-center justify-center animate-pulse">
           <span class="text-xs font-bold text-white">{{ unreadCount }}</span>
         </div>
-        
+
         <!-- Background animation -->
         <div class="absolute inset-0 bg-gradient-to-r from-[#10B981] to-[#4F46E5] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-        
+
         <!-- Pulse ring effect -->
         <div class="absolute inset-0 rounded-2xl bg-[#4F46E5]/30 animate-ping"></div>
-        
+
         <!-- Ícono de chat -->
-        <svg class="w-7 h-7 transition-all duration-300 group-hover:scale-110 relative z-10" 
+        <svg class="w-7 h-7 transition-all duration-300 group-hover:scale-110 relative z-10"
              fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
         </svg>
@@ -185,10 +177,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, nextTick, computed, watch } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { useI18n } from '@/composables/useI18n'
 
-const { t, locale, setLanguage } = useI18n()
+const { text } = useI18n()
 
 const isOpen = ref(false) // Contraído por defecto
 const newMessage = ref('')
@@ -200,36 +192,18 @@ const unreadCount = ref(0)
 
 const messages = ref([
   {
-    text: t('chatbot.welcome'),
+    text: text.chatbot.welcome,
     isUser: false
   }
 ])
 
-// Quick actions based on language
-const quickActions = computed(() => {
-  if (locale.value === 'es') {
-    return [
-      { text: '💼 Servicios', response: 'services' },
-      { text: '💰 Precios', response: 'pricing' },
-      { text: '📞 Contacto', response: 'contact' },
-      { text: '🚀 Freelancer vs Empresa', response: 'comparison' }
-    ]
-  } else {
-    return [
-      { text: '💼 Services', response: 'services' },
-      { text: '💰 Pricing', response: 'pricing' },
-      { text: '📞 Contact', response: 'contact' },
-      { text: '🚀 Freelancer vs Company', response: 'comparison' }
-    ]
-  }
-})
-
-// Watch for language changes to update welcome message
-watch(locale, () => {
-  if (messages.value.length === 1 && !messages.value[0].isUser) {
-    messages.value[0].text = t('chatbot.welcome')
-  }
-})
+// Quick actions in English only
+const quickActions = [
+  { text: '💼 Services', response: 'services' },
+  { text: '💰 Pricing', response: 'pricing' },
+  { text: '📞 Contact', response: 'contact' },
+  { text: '🚀 Freelancer vs Company', response: 'comparison' }
+]
 
 const toggleChat = () => {
   isOpen.value = !isOpen.value
@@ -246,19 +220,13 @@ const minimizeChat = () => {
 
 const closeChat = () => {
   isOpen.value = false
-  // Opcional: podrías agregar lógica adicional para "cerrar" completamente el chat
   hasUnreadMessages.value = false
   unreadCount.value = 0
 }
 
-const toggleChatLanguage = () => {
-  const newLang = locale.value === 'es' ? 'en' : 'es'
-  setLanguage(newLang)
-}
-
 const selectQuickAction = (action: any) => {
   showQuickActions.value = false
-  
+
   // Add user message
   messages.value.push({
     text: action.text,
@@ -283,7 +251,7 @@ const sendMessage = () => {
   if (!newMessage.value.trim() || isTyping.value) return
 
   showQuickActions.value = false
-  
+
   // Add user message
   messages.value.push({
     text: newMessage.value,
@@ -296,7 +264,7 @@ const sendMessage = () => {
 
   // Show typing indicator
   isTyping.value = true
-  
+
   // Generate bot response
   setTimeout(() => {
     generateBotResponse(userMessage)
@@ -307,37 +275,21 @@ const sendMessage = () => {
 
 const generateBotResponse = (input: string) => {
   let response = ''
-  
-  const isSpanish = locale.value === 'es'
-  
-  if (input.includes('services') || input.includes('servicio') || input.includes('proyecto')) {
-    response = isSpanish 
-      ? 'Ofrezco dos modalidades: 🚀 **Freelancer** para proyectos ágiles y comunicación directa, y 🏢 **Empresa** para desarrollos complejos con soporte integral. ¿Cuál te interesa más?' 
-      : 'I offer two modalities: 🚀 **Freelancer** for agile projects with direct communication, and 🏢 **Company** for complex developments with comprehensive support. Which interests you more?'
-  } else if (input.includes('comparison') || input.includes('freelancer') || input.includes('empresa') || input.includes('company')) {
-    response = isSpanish
-      ? '**Freelancer**: Desarrollo rápido, comunicación directa, precios competitivos, máxima flexibilidad.\n\n**Empresa**: Arquitecturas enterprise, soporte 24/7, documentación completa, garantías extendidas.\n\n¿Tienes algún proyecto en mente?'
-      : '**Freelancer**: Rapid development, direct communication, competitive prices, maximum flexibility.\n\n**Company**: Enterprise architectures, 24/7 support, complete documentation, extended warranties.\n\nDo you have a project in mind?'
-  } else if (input.includes('contact') || input.includes('contacto') || input.includes('email')) {
-    response = isSpanish
-      ? 'Puedes contactarme en: 📧 contact@uytechsolutions.com\nTambién puedes usar el formulario de contacto en la página. ¡Estaré encantado de ayudarte!'
-      : 'You can contact me at: 📧 contact@uytechsolutions.com\nYou can also use the contact form on the page. I\'ll be happy to help you!'
-  } else if (input.includes('pricing') || input.includes('precio') || input.includes('costo') || input.includes('cost')) {
-    response = isSpanish
-      ? 'Cada proyecto es único 🎯. Los precios varían según:\n• Complejidad técnica\n• Modalidad (Freelancer/Empresa)\n• Plazos de entrega\n• Tecnologías requeridas\n\n¡Contacta para una consulta gratuita!'
-      : 'Each project is unique 🎯. Prices vary according to:\n• Technical complexity\n• Modality (Freelancer/Company)\n• Delivery deadlines\n• Required technologies\n\nContact for a free consultation!'
-  } else if (input.includes('hola') || input.includes('hello') || input.includes('hi') || input.includes('buenos días') || input.includes('good morning')) {
-    response = isSpanish
-      ? '¡Hola! 👋 Es un placer saludarte. Soy Diego, desarrollador full-stack de UY Tech Solutions. ¿En qué puedo ayudarte hoy?'
-      : 'Hello! 👋 It\'s a pleasure to greet you. I\'m Diego, full-stack developer at UY Tech Solutions. How can I help you today?'
-  } else if (input.includes('tecnología') || input.includes('technology') || input.includes('stack')) {
-    response = isSpanish
-      ? 'Trabajo con tecnologías modernas: 🔧 Vue.js, React, Node.js, TypeScript, PostgreSQL, MongoDB, Docker, AWS. ¿Hay alguna tecnología específica que te interese?'
-      : 'I work with modern technologies: 🔧 Vue.js, React, Node.js, TypeScript, PostgreSQL, MongoDB, Docker, AWS. Is there a specific technology you\'re interested in?'
+
+  if (input.includes('services') || input.includes('service') || input.includes('project')) {
+    response = 'I offer two modalities: 🚀 **Freelancer** for agile projects with direct communication, and 🏢 **Company** for complex developments with comprehensive support. Which interests you more?'
+  } else if (input.includes('comparison') || input.includes('freelancer') || input.includes('company')) {
+    response = '**Freelancer**: Rapid development, direct communication, competitive prices, maximum flexibility.\n\n**Company**: Enterprise architectures, 24/7 support, complete documentation, extended warranties.\n\nDo you have a project in mind?'
+  } else if (input.includes('contact') || input.includes('email')) {
+    response = 'You can contact me at: 📧 contact@uytechsolutions.com\nYou can also use the contact form on the page. I\'ll be happy to help you!'
+  } else if (input.includes('pricing') || input.includes('price') || input.includes('cost')) {
+    response = 'Each project is unique 🎯. Prices vary according to:\n• Technical complexity\n• Modality (Freelancer/Company)\n• Delivery deadlines\n• Required technologies\n\nContact for a free consultation!'
+  } else if (input.includes('hello') || input.includes('hi') || input.includes('good morning') || input.includes('good afternoon')) {
+    response = 'Hello! 👋 It\'s a pleasure to greet you. I\'m Diego, full-stack developer at UY Tech Solutions. How can I help you today?'
+  } else if (input.includes('technology') || input.includes('stack') || input.includes('tech')) {
+    response = 'I work with modern technologies: 🔧 Vue.js, React, Node.js, TypeScript, PostgreSQL, MongoDB, Docker, AWS. Is there a specific technology you\'re interested in?'
   } else {
-    response = isSpanish
-      ? 'Gracias por tu mensaje 😊. Si tienes alguna pregunta específica sobre mis servicios, tecnologías o proyectos, estaré encantado de ayudarte.'
-      : 'Thank you for your message 😊. If you have any specific questions about my services, technologies, or projects, I\'ll be happy to help you.'
+    response = 'Thank you for your message 😊. If you have any specific questions about my services, technologies, or projects, I\'ll be happy to help you.'
   }
 
   messages.value.push({
@@ -360,7 +312,7 @@ onMounted(() => {
     if (!isOpen.value) {
       addNotification()
       messages.value.push({
-        text: t('chatbot.autoMessage'),
+        text: text.chatbot.autoMessage,
         isUser: false
       })
     }

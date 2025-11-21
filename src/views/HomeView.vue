@@ -8,10 +8,10 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
           <h2 class="section-title">
-            {{ t('about.title') }} <span class="gradient-text">{{ t('about.titleHighlight') }}</span>?
+            {{ text.about.title }} <span class="gradient-text">{{ text.about.titleHighlight }}</span>?
           </h2>
           <p class="section-subtitle">
-            {{ t('about.subtitle') }}
+            {{ text.about.subtitle }}
           </p>
         </div>
 
@@ -22,9 +22,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold text-[#F1F5F9] mb-4">{{ t('about.experience.title') }}</h3>
+            <h3 class="text-xl font-bold text-[#F1F5F9] mb-4">{{ text.about.experience.title }}</h3>
             <p class="text-[#94A3B8] leading-relaxed">
-              {{ t('about.experience.description') }}
+              {{ text.about.experience.description }}
             </p>
           </div>
 
@@ -34,9 +34,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold text-[#F1F5F9] mb-4">{{ t('about.performance.title') }}</h3>
+            <h3 class="text-xl font-bold text-[#F1F5F9] mb-4">{{ text.about.performance.title }}</h3>
             <p class="text-[#94A3B8] leading-relaxed">
-              {{ t('about.performance.description') }}
+              {{ text.about.performance.description }}
             </p>
           </div>
 
@@ -46,9 +46,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
             </div>
-            <h3 class="text-xl font-bold text-[#F1F5F9] mb-4">{{ t('about.security.title') }}</h3>
+            <h3 class="text-xl font-bold text-[#F1F5F9] mb-4">{{ text.about.security.title }}</h3>
             <p class="text-[#94A3B8] leading-relaxed">
-              {{ t('about.security.description') }}
+              {{ text.about.security.description }}
             </p>
           </div>
         </div>
@@ -60,10 +60,10 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
           <h2 class="section-title">
-            {{ t('technologies.title') }} <span class="gradient-text">{{ t('technologies.titleHighlight') }}</span>
+            {{ text.technologies.title }} <span class="gradient-text">{{ text.technologies.titleHighlight }}</span>
           </h2>
           <p class="section-subtitle">
-            {{ t('technologies.subtitle') }}
+            {{ text.technologies.subtitle }}
           </p>
         </div>
 
@@ -156,10 +156,10 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
           <h2 class="section-title">
-            {{ t('services.freelancer.title') }} & {{ t('services.company.title') }}
+            {{ text.services.freelancer.title }} & {{ text.services.company.title }}
           </h2>
           <p class="section-subtitle">
-            {{ locale === 'es' ? 'Elije la modalidad que mejor se adapte a tu proyecto' : 'Choose the modality that best fits your project' }}
+            Choose the modality that best fits your project
           </p>
         </div>
 
@@ -172,13 +172,13 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 class="text-2xl font-bold text-[#F1F5F9]">{{ t('services.freelancer.title') }}</h3>
+              <h3 class="text-2xl font-bold text-[#F1F5F9]">{{ text.services.freelancer.title }}</h3>
             </div>
             <p class="text-[#94A3B8] mb-6 leading-relaxed">
-              {{ t('services.freelancer.description') }}
+              {{ text.services.freelancer.description }}
             </p>
             <ul class="space-y-3 mb-6">
-              <li v-for="feature in t('services.freelancer.features')" :key="feature" class="flex items-center text-[#94A3B8]">
+              <li v-for="feature in text.services.freelancer.features" :key="feature" class="flex items-center text-[#94A3B8]">
                 <svg class="w-5 h-5 text-[#10B981] mr-3" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                 </svg>
@@ -186,7 +186,7 @@
               </li>
             </ul>
             <a href="#contact" class="btn-secondary w-full text-center">
-              Contactar Freelancer
+              Contact Freelancer
             </a>
           </div>
 
@@ -198,13 +198,13 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H3m2 0h2M7 7h10M7 11h10M7 15h10" />
                 </svg>
               </div>
-              <h3 class="text-2xl font-bold text-[#F1F5F9]">{{ t('services.company.title') }}</h3>
+              <h3 class="text-2xl font-bold text-[#F1F5F9]">{{ text.services.company.title }}</h3>
             </div>
             <p class="text-[#94A3B8] mb-6 leading-relaxed">
-              {{ t('services.company.description') }}
+              {{ text.services.company.description }}
             </p>
             <ul class="space-y-3 mb-6">
-              <li v-for="feature in t('services.company.features')" :key="feature" class="flex items-center text-[#94A3B8]">
+              <li v-for="feature in text.services.company.features" :key="feature" class="flex items-center text-[#94A3B8]">
                 <svg class="w-5 h-5 text-[#4F46E5] mr-3" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                 </svg>
@@ -212,7 +212,7 @@
               </li>
             </ul>
             <a href="#contact" class="btn-primary w-full text-center">
-              Consultar Empresa
+              Consult Company
             </a>
           </div>
         </div>
@@ -224,53 +224,53 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
           <h2 class="section-title">
-            {{ t('founder.title') }} <span class="gradient-text">{{ t('founder.titleHighlight') }}</span>
+            {{ text.founder.title }} <span class="gradient-text">{{ text.founder.titleHighlight }}</span>
           </h2>
           <p class="section-subtitle">
-            {{ t('founder.subtitle') }}
+            {{ text.founder.subtitle }}
           </p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div class="text-center lg:text-left">
             <div class="w-48 h-48 bg-gradient-to-br from-[#4F46E5] to-[#06B6D4] rounded-full flex items-center justify-center mx-auto lg:mx-0 mb-8 overflow-hidden shadow-2xl">
-              <img 
-                src="/images/diego-elevator-selfie.jpg" 
+              <img
+                src="/images/diego-elevator-selfie.jpg"
                 alt="Diego Morales Perez - Fundador UY Tech Solutions"
                 class="w-full h-full object-cover"
               />
             </div>
           </div>
-          
+
           <div class="animate-slide-in-right">
             <h3 class="text-3xl md:text-4xl font-bold text-[#F1F5F9] mb-6">
-              {{ t('founder.name') }}
+              {{ text.founder.name }}
             </h3>
-            <p class="text-[#4F46E5] text-xl mb-6">{{ t('founder.role') }}</p>
+            <p class="text-[#4F46E5] text-xl mb-6">{{ text.founder.role }}</p>
             <p class="text-[#94A3B8] mb-6 leading-relaxed">
-              {{ t('founder.bio1') }}
+              {{ text.founder.bio1 }}
             </p>
             <p class="text-[#94A3B8] mb-8 leading-relaxed">
-              {{ t('founder.bio2') }}
+              {{ text.founder.bio2 }}
             </p>
-            
+
             <div class="flex flex-col sm:flex-row gap-4">
-              <a 
-                href="https://github.com/diegomoralespdev" 
-                target="_blank" 
+              <a
+                href="https://github.com/diegomoralespdev"
+                target="_blank"
                 rel="noopener noreferrer"
                 class="btn-secondary"
               >
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                 </svg>
-                {{ t('founder.cta1') }}
+                {{ text.founder.cta1 }}
               </a>
-              <router-link 
-                to="/about" 
+              <router-link
+                to="/about"
                 class="btn-primary"
               >
-                {{ t('founder.cta2') }}
+                {{ text.founder.cta2 }}
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
@@ -286,41 +286,41 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
           <h2 class="section-title">
-            {{ t('workspace.title') }} <span class="gradient-text">{{ t('workspace.titleHighlight') }}</span>
+            {{ text.workspace.title }} <span class="gradient-text">{{ text.workspace.titleHighlight }}</span>
           </h2>
           <p class="section-subtitle">
-            {{ t('workspace.subtitle') }}
+            {{ text.workspace.subtitle }}
           </p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div class="order-2 lg:order-1 animate-slide-in-left">
             <h3 class="text-3xl md:text-4xl font-bold text-[#F1F5F9] mb-6">
-              {{ locale === 'es' ? 'Ambiente Profesional' : 'Professional Environment' }}
+              Professional Environment
             </h3>
             <p class="text-[#94A3B8] mb-6 leading-relaxed">
-              {{ t('workspace.description1') }}
+              {{ text.workspace.description1 }}
             </p>
             <div class="grid grid-cols-2 gap-4 mb-8">
               <div class="stats-card">
                 <div class="stats-number">50+</div>
-                <div class="stats-label">{{ t('workspace.stats.projects') }}</div>
+                <div class="stats-label">{{ text.workspace.stats.projects }}</div>
               </div>
               <div class="stats-card">
                 <div class="stats-number">24/7</div>
-                <div class="stats-label">{{ t('workspace.stats.availability') }}</div>
+                <div class="stats-label">{{ text.workspace.stats.availability }}</div>
               </div>
             </div>
             <p class="text-[#94A3B8] mb-8 leading-relaxed">
-              {{ t('workspace.description2') }}
+              {{ text.workspace.description2 }}
             </p>
           </div>
-          
+
           <div class="order-1 lg:order-2">
             <div class="relative">
               <div class="bg-gradient-to-br from-[#4F46E5]/25 to-[#06B6D4]/20 rounded-2xl p-2">
-                <img 
-                  src="/images/diego-workspace.jpg" 
+                <img
+                  src="/images/diego-workspace.jpg"
                   alt="Espacio de trabajo de Diego Morales Perez - UY Tech Solutions"
                   class="w-full h-auto rounded-xl shadow-2xl"
                 />
@@ -340,23 +340,23 @@
     <section class="py-20 bg-gradient-to-r from-[#4F46E5] to-[#06B6D4]">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 class="text-4xl md:text-5xl font-bold text-[#F1F5F9] mb-6">
-          {{ t('cta.title') }}
+          {{ text.cta.title }}
         </h2>
         <p class="text-xl text-[#0B1426] mb-8 max-w-3xl mx-auto">
-          {{ t('cta.description') }}
+          {{ text.cta.description }}
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <router-link
             to="/contact"
             class="bg-[#F1F5F9] text-[#4F46E5] hover:bg-[#0B1426] hover:text-[#F1F5F9] font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
           >
-            {{ t('cta.startProject') }}
+            {{ text.cta.startProject }}
           </router-link>
           <router-link
             to="/projects"
             class="border-2 border-[#F1F5F9] text-[#F1F5F9] hover:bg-[#F1F5F9] hover:text-[#4F46E5] font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105"
           >
-            {{ t('cta.viewProjects') }}
+            {{ text.cta.viewProjects }}
           </router-link>
         </div>
       </div>
@@ -368,7 +368,7 @@
 import Hero from '@/components/Hero.vue'
 import { useI18n } from '@/composables/useI18n'
 
-const { t, locale } = useI18n()
+const { text } = useI18n()
 </script>
 
 <style scoped>

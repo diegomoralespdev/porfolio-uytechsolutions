@@ -16,23 +16,13 @@
 
         <!-- Desktop Navigation -->
         <div class="hidden md:flex items-center space-x-6">
-          <!-- Language Switcher -->
-          <LanguageSwitcher />
-          <router-link 
-            to="/" 
-            class="text-[#F1F5F9] hover:text-[#4F46E5] transition-all duration-300 font-medium relative group"
-            active-class="text-[#4F46E5]"
-          >
-            {{ t('nav.home') }}
-            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#4F46E5] transition-all duration-300 group-hover:w-full"></span>
-          </router-link>
           
           <router-link 
             to="/about" 
             class="text-[#F1F5F9] hover:text-[#4F46E5] transition-all duration-300 font-medium relative group"
             active-class="text-[#4F46E5]"
           >
-            {{ t('nav.about') }}
+            {{ text.nav.about }}
             <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#4F46E5] transition-all duration-300 group-hover:w-full"></span>
           </router-link>
           
@@ -41,7 +31,7 @@
             class="text-[#F1F5F9] hover:text-[#4F46E5] transition-all duration-300 font-medium relative group"
             active-class="text-[#4F46E5]"
           >
-            {{ t('nav.services') }}
+            {{ text.nav.services }}
             <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#4F46E5] transition-all duration-300 group-hover:w-full"></span>
           </router-link>
           
@@ -50,7 +40,7 @@
             class="text-[#F1F5F9] hover:text-[#4F46E5] transition-all duration-300 font-medium relative group"
             active-class="text-[#4F46E5]"
           >
-            {{ t('nav.projects') }}
+            {{ text.nav.projects }}
             <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#4F46E5] transition-all duration-300 group-hover:w-full"></span>
           </router-link>
           
@@ -59,7 +49,7 @@
             class="text-[#F1F5F9] hover:text-[#4F46E5] transition-all duration-300 font-medium relative group"
             active-class="text-[#4F46E5]"
           >
-            {{ t('nav.contact') }}
+            {{ text.nav.contact }}
             <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#4F46E5] transition-all duration-300 group-hover:w-full"></span>
           </router-link>
 
@@ -68,7 +58,7 @@
             href="#contact" 
             class="btn-primary transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-glow"
           >
-            {{ t('hero.cta2') }}
+            {{ text.hero.cta2 }}
           </a>
         </div>
 
@@ -118,7 +108,7 @@
               class="text-[#F1F5F9] hover:text-[#4F46E5] transition-all duration-300 font-medium py-2 px-4 rounded-lg hover:bg-[#4F46E5]/10"
               active-class="text-[#4F46E5] bg-[#4F46E5]/10"
             >
-              {{ t('nav.home') }}
+              {{ text.nav.home }}
             </router-link>
             
             <router-link 
@@ -127,7 +117,7 @@
               class="text-[#F1F5F9] hover:text-[#4F46E5] transition-all duration-300 font-medium py-2 px-4 rounded-lg hover:bg-[#4F46E5]/10"
               active-class="text-[#4F46E5] bg-[#4F46E5]/10"
             >
-              {{ t('nav.about') }}
+              {{ text.nav.about }}
             </router-link>
             
             <router-link 
@@ -136,7 +126,7 @@
               class="text-[#F1F5F9] hover:text-[#4F46E5] transition-all duration-300 font-medium py-2 px-4 rounded-lg hover:bg-[#4F46E5]/10"
               active-class="text-[#4F46E5] bg-[#4F46E5]/10"
             >
-              {{ t('nav.services') }}
+              {{ text.nav.services }}
             </router-link>
             
             <router-link 
@@ -145,7 +135,7 @@
               class="text-[#F1F5F9] hover:text-[#4F46E5] transition-all duration-300 font-medium py-2 px-4 rounded-lg hover:bg-[#4F46E5]/10"
               active-class="text-[#4F46E5] bg-[#4F46E5]/10"
             >
-              {{ t('nav.projects') }}
+              {{ text.nav.projects }}
             </router-link>
             
             <router-link 
@@ -154,7 +144,7 @@
               class="text-[#F1F5F9] hover:text-[#4F46E5] transition-all duration-300 font-medium py-2 px-4 rounded-lg hover:bg-[#4F46E5]/10"
               active-class="text-[#4F46E5] bg-[#4F46E5]/10"
             >
-              {{ t('nav.contact') }}
+              {{ text.nav.contact }}
             </router-link>
 
             <!-- Mobile CTA Button -->
@@ -163,7 +153,7 @@
               @click="isOpen = false"
               class="btn-primary w-full text-center transform hover:scale-105 transition-all duration-300"
             >
-              {{ t('hero.cta2') }}
+              {{ text.hero.cta2 }}
             </a>
           </div>
         </div>
@@ -173,16 +163,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useI18n } from '@/composables/useI18n'
-import LanguageSwitcher from './LanguageSwitcher.vue'
 
-const { t, initLanguage } = useI18n()
+const { text } = useI18n()
 const isOpen = ref(false)
-
-onMounted(() => {
-  initLanguage()
-})
 </script>
 
 <style scoped>

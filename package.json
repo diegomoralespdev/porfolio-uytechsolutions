@@ -18,7 +18,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "buildddddddddddddffffffffffffffffffffffff000000000000/,ñp:; "vue-tsc && vite build",
+    "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "test": "vitest",
