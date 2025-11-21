@@ -41,3 +41,5 @@ out/
 # Temporary files
 *.tmp
 *.temp
+
+.claude/*json

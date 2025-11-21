@@ -45,21 +45,8 @@ const router = createRouter({
       }
     }
   ],
-  scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { top: 0 }
-    }
-  }
-})
 
-// Update page title on route change
-router.beforeEach((to, from, next) => {
-  if (to.meta.title) {
-    document.title = to.meta.title as string
-  }
-  next()
+  
 })
 
 export default router

@@ -5,10 +5,12 @@ import ChatBot from '@/components/ChatBot.vue'
 </script>
 
 <template>
-  <div id="app" class="min-h-screen bg-[#0F172A] text-[#E2E8F0]">
+  <div id="app" class="min-h-screen bg-[#0B1426] text-[#F1F5F9] tech-bg-pattern relative">
+    <!-- Neural Network Background -->
+    <div class="neural-network fixed inset-0 pointer-events-none"></div>
     <Navbar />
     
-    <main class="pt-20">
+    <main class="pt-20 relative z-10">
       <router-view v-slot="{ Component }">
         <transition name="page" mode="out-in">
           <component :is="Component" />
@@ -49,13 +51,13 @@ html {
 
 /* Selection styles */
 ::selection {
-  background-color: rgba(56, 189, 248, 0.3);
-  color: #38BDF8;
+  background-color: rgba(79, 70, 229, 0.3);
+  color: #4F46E5;
 }
 
 /* Focus styles */
 *:focus {
-  outline: 2px solid #38BDF8;
+  outline: 2px solid #4F46E5;
   outline-offset: 2px;
 }
 
@@ -65,15 +67,15 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #020617;
+  background: #030712;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #38BDF8;
+  background: linear-gradient(180deg, #4F46E5 0%, #10B981 100%);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #06B6D4;
+  background: linear-gradient(180deg, #10B981 0%, #4F46E5 100%);
 }
 </style>
