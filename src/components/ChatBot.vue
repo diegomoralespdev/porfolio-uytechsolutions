@@ -100,16 +100,28 @@
               {{ message.text }}
             </div>
 
-            <div v-else class="chatbot-message-bot">
+            <div v-else
+                 class="chatbot-message-bot"
+                 :class="{ 'streaming': index === streamingMessageId && isStreaming }">
               <div class="flex items-center space-x-2 mb-1">
                 <div class="w-5 h-5 bg-gradient-to-r from-[#4F46E5] to-[#10B981] rounded-full flex items-center justify-center">
-                  <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <svg v-if="!(index === streamingMessageId && isStreaming)" class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                   </svg>
+                  <div v-else class="streaming-indicator">
+                    <span>•</span><span>•</span><span>•</span>
+                  </div>
                 </div>
-                <span class="text-xs text-[#10B981] font-medium">Assistant</span>
+                <span class="text-xs font-medium"
+                      :class="index === streamingMessageId && isStreaming ? 'text-[#10B981]' : 'text-[#10B981]'">
+                  {{ index === streamingMessageId && isStreaming ? 'Escribiendo...' : 'Assistant' }}
+                </span>
               </div>
-              {{ message.text }}
+              <div class="message-content">
+                <span v-if="message.text">{{ message.text }}</span>
+                <span v-else-if="index === streamingMessageId && isStreaming" class="text-[#94A3B8]">...</span>
+                <span v-if="index === streamingMessageId && isStreaming" class="typing-cursor">|</span>
+              </div>
             </div>
           </div>
 
@@ -200,6 +212,8 @@ const sessionId = ref('')
 const hasUnread = ref(false)
 const lastMessage = ref('')
 const messagesContainer = ref<HTMLElement>()
+const isStreaming = ref(false)
+const streamingMessageId = ref<number | null>(null)
 
 const quickSuggestions = [
   '💼 Servicios',
@@ -313,6 +327,99 @@ const scrollToBottom = () => {
   }
 }
 
+// Typing effect function
+const typeMessage = async (text: string, messageIndex: number) => {
+  isStreaming.value = true
+  streamingMessageId.value = messageIndex
+
+  const words = text.split(' ')
+  let currentText = ''
+
+  for (let i = 0; i < words.length; i++) {
+    currentText += (i === 0 ? '' : ' ') + words[i]
+    messages.value[messageIndex].text = currentText
+
+    // Scroll to bottom as we type
+    scrollToBottom()
+
+    // Delay between words (faster than typical typewriter effect)
+    await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 30))
+  }
+
+  isStreaming.value = false
+  streamingMessageId.value = null
+}
+
+// Handle streaming response from n8n
+const handleStreamingResponse = async (response: Response, messageIndex: number) => {
+  const reader = response.body?.getReader()
+  const decoder = new TextDecoder()
+
+  if (!reader) {
+    throw new Error('Response body is not readable')
+  }
+
+  isStreaming.value = true
+  streamingMessageId.value = messageIndex
+  let fullText = ''
+
+  try {
+    while (true) {
+      const { done, value } = await reader.read()
+
+      if (done) break
+
+      const chunk = decoder.decode(value, { stream: true })
+
+      // Parse each chunk (assuming n8n sends JSON chunks)
+      const lines = chunk.split('\n').filter(line => line.trim())
+
+      for (const line of lines) {
+        try {
+          // Handle different streaming formats
+          if (line.startsWith('data: ')) {
+            const data = JSON.parse(line.replace('data: ', ''))
+            if (data.token) {
+              fullText += data.token
+              messages.value[messageIndex].text = fullText
+              scrollToBottom()
+            } else if (data.reply) {
+              fullText = data.reply
+              messages.value[messageIndex].text = fullText
+              break
+            }
+          } else if (line.trim() && line.startsWith('{')) {
+            const data = JSON.parse(line)
+            if (data.token) {
+              fullText += data.token
+              messages.value[messageIndex].text = fullText
+              scrollToBottom()
+            } else if (data.reply) {
+              fullText = data.reply
+              messages.value[messageIndex].text = fullText
+              break
+            }
+          }
+        } catch (e) {
+          // If JSON parsing fails, treat as raw text chunk
+          fullText += chunk
+          messages.value[messageIndex].text = fullText
+          scrollToBottom()
+        }
+      }
+
+      // Small delay to make streaming visible
+      await new Promise(resolve => setTimeout(resolve, 10))
+    }
+  } finally {
+    isStreaming.value = false
+    streamingMessageId.value = null
+    reader.releaseLock()
+  }
+
+  return fullText
+}
+
 const sendMessage = async () => {
   if (!currentMessage.value.trim() || loading.value) return
 
@@ -346,6 +453,7 @@ const sendMessage = async () => {
       timezone,
       device,
       datetime,
+      stream: true, // Request streaming response
       metadata: {
         ip: null, // Will be detected by server
         userAgent,
@@ -359,10 +467,20 @@ const sendMessage = async () => {
     const webhookUrl = getWebhookUrl()
     console.log('Using webhook URL:', webhookUrl) // For debugging
 
+    // Add empty bot message that will be filled by streaming
+    const botMessageIndex = messages.value.length
+    messages.value.push({
+      text: '',
+      isUser: false
+    })
+
+    scrollToBottom()
+
     const response = await fetch(webhookUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'text/plain, application/json, text/event-stream'
       },
       body: JSON.stringify(payload)
     })
@@ -371,13 +489,28 @@ const sendMessage = async () => {
       throw new Error(`Error: ${response.status}`)
     }
 
-    const data = await response.json()
+    // Check if response is streaming
+    const contentType = response.headers.get('content-type')
+    const isStreamingResponse = contentType?.includes('text/plain') || contentType?.includes('text/event-stream') || response.body
 
-    // Add bot response to chat
-    messages.value.push({
-      text: data.reply || 'Sin respuesta',
-      isUser: false
-    })
+    if (isStreamingResponse && response.body) {
+      // Handle streaming response
+      try {
+        await handleStreamingResponse(response, botMessageIndex)
+      } catch (streamError) {
+        console.error('Streaming error:', streamError)
+        // Fallback to regular JSON response
+        const data = await response.json()
+        messages.value[botMessageIndex].text = data.reply || 'Sin respuesta'
+      }
+    } else {
+      // Fallback to regular JSON response
+      const data = await response.json()
+      const botReply = data.reply || 'Sin respuesta'
+
+      // Use typing effect for non-streaming responses
+      await typeMessage(botReply, botMessageIndex)
+    }
 
     if (!isOpen.value) {
       hasUnread.value = true
@@ -387,6 +520,11 @@ const sendMessage = async () => {
   } catch (err) {
     console.error('Error sending message:', err)
     error.value = 'Error al conectar con el servidor'
+
+    // Remove the empty bot message if there was an error
+    if (messages.value.length > 0 && messages.value[messages.value.length - 1].text === '' && !messages.value[messages.value.length - 1].isUser) {
+      messages.value.pop()
+    }
   } finally {
     loading.value = false
     scrollToBottom()
@@ -649,6 +787,68 @@ const sendMessage = async () => {
 
 .animate-fade-in-up {
   animation: fade-in-up 0.4s ease-out forwards;
+}
+
+/* Streaming animations */
+@keyframes typing-cursor {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+.typing-cursor {
+  display: inline-block;
+  color: #10B981;
+  font-weight: bold;
+  animation: typing-cursor 1s infinite;
+  margin-left: 2px;
+}
+
+.message-content {
+  position: relative;
+  word-wrap: break-word;
+}
+
+/* Streaming message highlight */
+.chatbot-message-bot.streaming {
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  box-shadow:
+    0 4px 15px rgba(16, 185, 129, 0.2),
+    0 1px 6px rgba(0, 0, 0, 0.1),
+    0 0 20px rgba(16, 185, 129, 0.1);
+  background: rgba(42, 52, 65, 0.95);
+}
+
+/* Loading dots for streaming */
+@keyframes streaming-dots {
+  0%, 20% {
+    color: rgba(16, 185, 129, 0.4);
+  }
+  40% {
+    color: rgba(16, 185, 129, 1);
+  }
+  60%, 100% {
+    color: rgba(16, 185, 129, 0.4);
+  }
+}
+
+.streaming-indicator {
+  display: inline-block;
+}
+
+.streaming-indicator span {
+  animation: streaming-dots 1.4s infinite ease-in-out both;
+}
+
+.streaming-indicator span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.streaming-indicator span:nth-child(2) {
+  animation-delay: -0.16s;
 }
 
 /* Mobile Responsive */
