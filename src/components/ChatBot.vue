@@ -198,7 +198,12 @@ const messages = ref([
 ])
 
 // Quick actions in English only
-const quickActions = [
+interface QuickAction {
+  text: string
+  response: string
+}
+
+const quickActions: QuickAction[] = [
   { text: '💼 Services', response: 'services' },
   { text: '💰 Pricing', response: 'pricing' },
   { text: '📞 Contact', response: 'contact' },
@@ -224,7 +229,7 @@ const closeChat = () => {
   unreadCount.value = 0
 }
 
-const selectQuickAction = (action: any) => {
+const selectQuickAction = (action: QuickAction) => {
   showQuickActions.value = false
 
   // Add user message

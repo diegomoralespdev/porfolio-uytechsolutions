@@ -216,7 +216,8 @@ const handleSubmit = async () => {
     }, 5000)
     
   } catch (error) {
-    submitError.value = 'Hubo un error al enviar el mensaje. Por favor, intenta nuevamente.'
+    console.error('Contact form submission error:', error)
+    submitError.value = 'There was an error sending the message. Please try again.'
   } finally {
     isSubmitting.value = false
   }
