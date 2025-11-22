@@ -329,6 +329,12 @@ const scrollToBottom = () => {
 
 // Typing effect function
 const typeMessage = async (text: string, messageIndex: number) => {
+  // Verify message exists and text is valid
+  if (!text || typeof text !== 'string' || messageIndex < 0 || !messages.value[messageIndex]) {
+    console.error('Invalid message data:', { text, messageIndex, messageExists: !!messages.value[messageIndex] })
+    return
+  }
+
   isStreaming.value = true
   streamingMessageId.value = messageIndex
 
@@ -336,6 +342,9 @@ const typeMessage = async (text: string, messageIndex: number) => {
   let currentText = ''
 
   for (let i = 0; i < words.length; i++) {
+    // Double-check message still exists
+    if (!messages.value[messageIndex]) break
+
     currentText += (i === 0 ? '' : ' ') + words[i]
     messages.value[messageIndex].text = currentText
 
@@ -370,27 +379,29 @@ const handleStreamingResponse = async (response: Response, messageIndex: number)
       if (done) break
 
       const chunk = decoder.decode(value, { stream: true })
+      console.log('Received chunk:', chunk) // Debug log
 
-      // Parse each chunk (assuming n8n sends JSON chunks)
+      // Split chunk by newlines to handle multiple JSON objects
       const lines = chunk.split('\n').filter(line => line.trim())
 
       for (const line of lines) {
         try {
-          // Handle different streaming formats
-          if (line.startsWith('data: ')) {
-            const data = JSON.parse(line.replace('data: ', ''))
-            if (data.token) {
-              fullText += data.token
+          if (line.trim() && line.startsWith('{')) {
+            const data = JSON.parse(line)
+            console.log('Parsed streaming data:', data) // Debug log
+
+            // Handle n8n streaming format
+            if (data.type === 'item' && data.content) {
+              fullText += data.content
               messages.value[messageIndex].text = fullText
               scrollToBottom()
-            } else if (data.reply) {
-              fullText = data.reply
-              messages.value[messageIndex].text = fullText
+            } else if (data.type === 'end') {
+              // Streaming finished
+              console.log('Streaming ended, final text:', fullText)
               break
             }
-          } else if (line.trim() && line.startsWith('{')) {
-            const data = JSON.parse(line)
-            if (data.token) {
+            // Handle other streaming formats (backward compatibility)
+            else if (data.token) {
               fullText += data.token
               messages.value[messageIndex].text = fullText
               scrollToBottom()
@@ -401,6 +412,7 @@ const handleStreamingResponse = async (response: Response, messageIndex: number)
             }
           }
         } catch (e) {
+          console.error('Error parsing streaming JSON:', e, 'Line:', line)
           // If JSON parsing fails, treat as raw text chunk
           fullText += chunk
           messages.value[messageIndex].text = fullText
@@ -409,7 +421,7 @@ const handleStreamingResponse = async (response: Response, messageIndex: number)
       }
 
       // Small delay to make streaming visible
-      await new Promise(resolve => setTimeout(resolve, 10))
+      await new Promise(resolve => setTimeout(resolve, 30))
     }
   } finally {
     isStreaming.value = false
@@ -493,8 +505,11 @@ const sendMessage = async () => {
     const contentType = response.headers.get('content-type')
     console.log('Response content-type:', contentType) // Debug log
 
-    // Only consider it streaming if explicitly marked as such
-    const isStreamingResponse = contentType?.includes('text/event-stream') || contentType?.includes('text/plain')
+    // Check for streaming indicators: content-type or if stream parameter was sent
+    const isStreamingResponse = contentType?.includes('text/event-stream') ||
+                               contentType?.includes('text/plain') ||
+                               contentType?.includes('application/x-ndjson') ||
+                               (payload.stream === true && response.body)
 
     if (isStreamingResponse && response.body) {
       // Handle streaming response
@@ -502,19 +517,30 @@ const sendMessage = async () => {
         await handleStreamingResponse(response, botMessageIndex)
       } catch (streamError) {
         console.error('Streaming error:', streamError)
-        // Fallback to regular JSON response
-        const data = await response.json()
-        const botReply = data.reply || 'Sin respuesta'
-        await typeMessage(botReply, botMessageIndex)
+        messages.value[botMessageIndex].text = 'Error en streaming, intentando respuesta normal...'
       }
     } else {
       // Handle regular JSON response from n8n
-      const data = await response.json()
-      console.log('Response data:', data) // Debug log
-      const botReply = data.reply || 'Sin respuesta'
+      try {
+        // Clone response to avoid reading body twice
+        const responseText = await response.text()
+        console.log('Raw response text:', responseText) // Debug log
 
-      // Use typing effect for regular responses
-      await typeMessage(botReply, botMessageIndex)
+        const data = JSON.parse(responseText)
+        console.log('Parsed response data:', data) // Debug log
+
+        const botReply = data.reply || 'Sin respuesta'
+        console.log('Bot reply text:', botReply) // Debug log
+        console.log('Message index:', botMessageIndex) // Debug log
+        console.log('Messages array length:', messages.value.length) // Debug log
+
+        // Use typing effect for regular responses
+        await typeMessage(botReply, botMessageIndex)
+      } catch (jsonError) {
+        console.error('Error parsing JSON response:', jsonError)
+        console.error('Response object:', response)
+        messages.value[botMessageIndex].text = 'Error al procesar la respuesta del servidor'
+      }
     }
 
     if (!isOpen.value) {
