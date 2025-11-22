@@ -489,9 +489,12 @@ const sendMessage = async () => {
       throw new Error(`Error: ${response.status}`)
     }
 
-    // Check if response is streaming
+    // Check if response is streaming by checking content-type first
     const contentType = response.headers.get('content-type')
-    const isStreamingResponse = contentType?.includes('text/plain') || contentType?.includes('text/event-stream') || response.body
+    console.log('Response content-type:', contentType) // Debug log
+
+    // Only consider it streaming if explicitly marked as such
+    const isStreamingResponse = contentType?.includes('text/event-stream') || contentType?.includes('text/plain')
 
     if (isStreamingResponse && response.body) {
       // Handle streaming response
@@ -501,14 +504,16 @@ const sendMessage = async () => {
         console.error('Streaming error:', streamError)
         // Fallback to regular JSON response
         const data = await response.json()
-        messages.value[botMessageIndex].text = data.reply || 'Sin respuesta'
+        const botReply = data.reply || 'Sin respuesta'
+        await typeMessage(botReply, botMessageIndex)
       }
     } else {
-      // Fallback to regular JSON response
+      // Handle regular JSON response from n8n
       const data = await response.json()
+      console.log('Response data:', data) // Debug log
       const botReply = data.reply || 'Sin respuesta'
 
-      // Use typing effect for non-streaming responses
+      // Use typing effect for regular responses
       await typeMessage(botReply, botMessageIndex)
     }
 
